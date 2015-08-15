@@ -35,7 +35,8 @@
     	    #type_title { position: absolute; top: 1px; right: 700px; width: 20px; height:15px; background: transparent; z-index:10;}	
 	    #sick { position: absolute; top: 20px; right: 650px; width: 10px; height:15px; background: transparent; z-index:10;}
 	   #death { position: absolute; top: 50px; right: 650px; width: 10px; height:15px; background: transparent; z-index:10;}
-
+	   #all { position: absolute; top: 80px; right: 650px; width: 10px; height:15px; background: transparent; z-index:10;}
+	   
 	   	    #admin_title { position: absolute; top: 1px; right: 610px; width: 25px; height:15px; background: transparent; z-index:10;}	   
 	   	    #prefec { position: absolute; top: 20px; right: 550px; width: 20px; height:15px; background: transparent; z-index:10;}
 	   #subprefec { position: absolute; top: 50px; right: 550px; width: 20px; height:15px; background: transparent; z-index:10;}
@@ -80,9 +81,13 @@
 	//var previous_signal = 'all_signal';
 	//var previous_net_type = 'all_net_type';
 	
-	var sqlQuery = "SELECT the_geom_webmercator, symptoms, prefectures__admin2_ , sub_prefectures__admin3_, call_type, calls_related_to_sick, admin_category, total_count, calls_related_to_death FROM guinea_callcentredata_1 WHERE call_type = 'Sick' and admin_category = 'Admin2'";
+	var sqlQuery = "SELECT the_geom_webmercator, symptoms, prefectures__admin2_ , sub_prefectures__admin3_, call_type, calls_related_to_sick, admin_category, total_count, calls_related_to_death FROM guinea_callcentredata_1 WHERE call_type = 'Sick' and admin_category = 'Admin2' ";
+	
+		var sqlQuery_all = "SELECT the_geom_webmercator, symptoms, prefectures__admin2_ , sub_prefectures__admin3_, call_type, calls_related_to_sick, admin_category, total_count, calls_related_to_death FROM guinea_callcentredata_1 WHERE call_type = 'Sick' and admin_category = 'Admin2'";
 	
 	var query = sqlQuery;
+	var query_all = sqlQuery_all;
+	
 	var text_replace_area ;
 	
   // create district selector
@@ -142,15 +147,21 @@
 	type: 'cartodb',
 	sublayers: [{
 	  sql: sqlQuery,
-	  cartocss: "#guinea_callcentredata_1{marker-fill-opacity: 0.9;marker-line-color: #FFF;marker-line-width: 1;marker-line-opacity: 1;marker-placement: point;marker-type: ellipse;marker-width: 28;marker-allow-overlap:true;}#guinea_callcentredata_1[call_type='Death'] {marker-fill: #000000;}#guinea_callcentredata_1[call_type='Sick'] {marker-fill: #229A00;}#guinea_callcentredata_1::labels {text-name: [total_count];text-face-name: 'DejaVu Sans Book';text-size: 10;text-label-position-tolerance: 10;text-fill: #000000;text-halo-fill: #FFFFFF;text-halo-radius: 1;text-dy: 0;text-allow-overlap: true;text-placement: interior;text-placement-type: simple;}"
-    }
+	  cartocss: "#guinea_callcentredata_1{marker-fill-opacity: 0.9;marker-line-color: #FFF;marker-line-width: 1;marker-line-opacity: 1;marker-placement: point;marker-type: ellipse;marker-width: 28;marker-allow-overlap:true;}#guinea_callcentredata_1[call_type='Sick'] {marker-fill: #229A00;}#guinea_callcentredata_1::labels {text-name: [calls_related_to_sick];text-face-name: 'DejaVu Sans Book';text-size: 10;text-label-position-tolerance: 10;text-fill: #000000;text-halo-fill: #FFFFFF;text-halo-radius: 1;text-dy: 0;text-allow-overlap: true;text-placement: interior;text-placement-type: simple;}"
+    },{
+	  sql: sqlQuery_all,
+	  cartocss: "#guinea_callcentredata_1_all{marker-fill-opacity: 0.9;marker-line-color: #FFF;marker-line-width: 1;marker-line-opacity: 1;marker-placement: point;marker-type: ellipse;marker-width: 28;marker-allow-overlap:true;marker-fill:  #0F3B82;}#guinea_callcentredata_1_all::labels {text-name: [total_count];text-face-name: 'DejaVu Sans Book';text-size: 10;text-label-position-tolerance: 10;text-fill: #000000;text-halo-fill: #FFFFFF;text-halo-radius: 1;text-dy: 0;text-allow-overlap: true;text-placement: interior;text-placement-type: simple;}"
+        }
         ,{
 	  sql: "SELECT * FROM guinea_admin2_boundary",
 	  cartocss: "#guinea_admin2_boundary{polygon-fill: #5CA2D1;polygon-opacity: 0.1;line-color: #F11810;line-width: 3;line-opacity: 0.12;}#guinea_admin2_boundary::labels {text-name: [admin2_name];text-face-name: 'DejaVu Sans Book';text-size: 9;text-label-position-tolerance: 10;text-fill: #000000;text-halo-fill: #FFFFFF;text-halo-radius: 4;text-dy: -10;text-allow-overlap: false;text-placement: point;text-placement-type: simple;[zoom <=7] {text-size:2}[zoom =7] {text-size:5}[zoom=8] {text-size:9}[zoom=9] {text-size:12}[zoom=10] {text-size:20}[zoom=11] {text-size:25}[zoom =8] {text-dy:-25}[zoom =9] {text-dy:-25}[zoom =10] {text-dy:-39}[zoom =11]{text-dy:-29}[zoom =12] {text-dy:-39}[zoom <=8] {text-allow-overlap: false}[zoom=5]{text-size:0.5}[zoom=5] {text-halo-radius:0.5}[zoom=6]{text-halo-radius:1.5}}"
 	} ,{
 	  sql: "SELECT * FROM guinea_admin3_boundary",
 	  cartocss: "#guinea_admin3_boundary{polygon-fill: #5CA2D1;polygon-opacity: 0.1;line-color: #F11810;line-width: 2.5;line-opacity: 0.1;}#guinea_admin3_boundary::labels {text-name: [admin3_name];text-face-name: 'DejaVu Sans Book';text-size: 1;text-label-position-tolerance: 10;text-fill: #000000;text-halo-fill: #FFFFFF;text-halo-radius: 3;text-dy: -10;text-allow-overlap: false;text-placement: point;text-placement-type: simple;[zoom <=7] {text-size:2}[zoom =7] {text-size:5}[zoom=8] {text-size:6.5}[zoom=9] {text-size:8}[zoom=10] {text-size:10}[zoom=11] {text-size:15}[zoom =10] {text-dy:-19}[zoom =11] {text-dy:-29}[zoom =12] {text-dy:-39}[zoom<=8]{text-allow-overlap: false}[zoom =6] {text-halo-radius:0.5}[zoom =7]{text-halo-radius:1}[zoom=8] {text-halo-radius:1.5}[zoom =6] {text-size:1}[zoom =6]{text-size:1.5}[zoom =5] {text-size:1}[zoom =5] {text-halo-radius:0.5}}"
-	}
+	},{
+	  sql: sqlQuery,
+	  cartocss: "#guinea_callcentredata_1_death{marker-fill-opacity: 0.9;marker-line-color: #FFF;marker-line-width: 1;marker-line-opacity: 1;marker-placement: point;marker-type: ellipse;marker-width: 28;marker-allow-overlap:true;}#guinea_callcentredata_1_death[call_type='Death'] {marker-fill: #000000;}#guinea_callcentredata_1::labels {text-name: [calls_related_to_death];text-face-name: 'DejaVu Sans Book';text-size: 10;text-label-position-tolerance: 10;text-fill: #000000;text-halo-fill: #FFFFFF;text-halo-radius: 1;text-dy: 0;text-allow-overlap: true;text-placement: interior;text-placement-type: simple;}"
+    }
 	]
 	}
 	
@@ -169,18 +180,23 @@
 		
 		createSelectorChoropleth(sublayers[0]);
 		
-	  		sublayers[2].hide();
+	  	sublayers[3].hide();
+		sublayers[1].hide();
+		sublayers[4].hide();
 	
 
 		cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(0), [ 'admin_category',  'calls_related_to_death', 'prefectures__admin2_' , 'total_count', 'sub_prefectures__admin3_', 'calls_related_to_sick', 'symptoms', 'call_type' ])	
 
-			
+		cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(1), [ 'admin_category',  'calls_related_to_death', 'prefectures__admin2_' , 'total_count', 'sub_prefectures__admin3_', 'calls_related_to_sick', 'symptoms', 'call_type' ])	
+
+		cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(4), [ 'admin_category',  'calls_related_to_death', 'prefectures__admin2_' , 'total_count', 'sub_prefectures__admin3_', 'calls_related_to_sick', 'symptoms', 'call_type' ])				
 		
 		var legendCallType = new cdb.geo.ui.Legend({
            type: "custom",
            data: [
             { name: "Death (total number of calls)", value: "#081B47" },
-            { name: "Sick (total number of calls)", value: "#229A00" }
+            { name: "Sick (total number of calls)", value: "#229A00" },
+            { name: "All type (Number of calls)", value: "#0F3B82" }
            ]
 		});
 		
@@ -204,31 +220,57 @@
 	var LayerActions = {
 
 	
-	 death: function(){
+ death: function(){
+
   			query = query.replace('Sick','Death');
 	  		sublayers[0].setSQL(query);
+	  		sublayers[4].toggle();
+	  		sublayers[1].hide();
+	  		sublayers[0].hide();
 	  		$('.button.sick').removeClass('selected');
+	  		$('.button.all').removeClass('selected');
+
 		
 	  },
 	  sick: function(){
+
   			query = query.replace('Death','Sick');
 	  		sublayers[0].setSQL(query);
+	  		sublayers[0].toggle();
+	  		sublayers[1].hide();
+	  		sublayers[4].hide();
 	  		$('.button.death').removeClass('selected');	
+	  		$('.button.all').removeClass('selected');
+
+	  },
+	  all: function(){
+		
+	  		sublayers[1].toggle();
+	  		sublayers[0].hide();
+	  		sublayers[4].hide();
+	  		$('.button.death').removeClass('selected');	
+	  		$('.button.sick').removeClass('selected');
+
+		
 	  },
 	  prefec: function(){
   			query = query.replace('Admin3','Admin2');
+  			query_all = query_all.replace('Admin3','Admin2');
 	  		sublayers[0].setSQL(query);
+	  		sublayers[1].setSQL(query_all);
 	  		$('.button.subprefec').removeClass('selected');
-	  		sublayers[2].hide();
-	  		sublayers[1].toggle();	
+	  		sublayers[3].hide();
+	  		sublayers[2].toggle();	
 		
 	  },
 	  subprefec: function(){
   			query = query.replace('Admin2','Admin3');
+  			query_all = query_all.replace('Admin2','Admin3');
 	  		sublayers[0].setSQL(query);
+	  		sublayers[1].setSQL(query_all);
 	  		$('.button.prefec').removeClass('selected');
-	  		sublayers[1].hide();
-	  		sublayers[2].toggle();	
+	  		sublayers[2].hide();
+	  		sublayers[3].toggle();	
 	  }
 	  
 	}	  
@@ -271,13 +313,14 @@ $('.button').bind( "click", checkclick );
 	  
  	  <div id='menu'>
 
-	  <div id="admin_title"><h7>Administration areas</h7></div>
+	  <div id="admin_title"><h7>Administrative Areas</h7></div>
 		<a href="#subprefec" id="subprefec" class="button subprefec">Sub-pref.</a>
 		<a href="#prefec" id="prefec" class="button prefec">Prefecture</a> 
 
  	  <div id="type_title"><h7>Call type</h7></div> 		 
 		<a href="#death" id="death" class="button death">Death</a> 
 		<a href="#sick" id="sick" class="button sick">Sick</a> 
+		<a href="#all" id="all" class="button all">All</a> 
 
 	  </div>
 </td>	  
