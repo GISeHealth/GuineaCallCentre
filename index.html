@@ -72,7 +72,7 @@
 	//var previous_signal = 'all_signal';
 	//var previous_net_type = 'all_net_type';
 	
-	var sqlQuery = "SELECT the_geom_webmercator, symptoms, call_type, calls_related_to_sick, admin_category, total_count, calls_related_to_death FROM guinea_callcentredata_1 WHERE call_type = 'Sick' and admin_category = 'Admin2'";
+	var sqlQuery = "SELECT the_geom_webmercator, symptoms, prefectures__admin2_ , sub_prefectures__admin3_, call_type, calls_related_to_sick, admin_category, total_count, calls_related_to_death FROM guinea_callcentredata_1 WHERE call_type = 'Sick' and admin_category = 'Admin2'";
 	
 	var query = sqlQuery;
 	var text_replace_area ;
@@ -164,7 +164,7 @@
 	  		sublayers[2].hide();
 	
 
-		cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(0), [ 'admin_category',  'calls_related_to_death', 'calls_related_to_sick', 'symptoms', 'call_type' ])	
+		cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(0), [ 'admin_category',  'calls_related_to_death', 'prefectures__admin2_' , 'total_count', 'sub_prefectures__admin3_', 'calls_related_to_sick', 'symptoms', 'call_type' ])	
 
 			
 		
