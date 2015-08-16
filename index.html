@@ -194,7 +194,7 @@
 	  cartocss: "#guinea_admin3_boundary{polygon-fill: #5CA2D1;polygon-opacity: 0.1;line-color: #F11810;line-width: 2.5;line-opacity: 0.1;}#guinea_admin3_boundary::labels {text-name: [admin3_name];text-face-name: 'DejaVu Sans Book';text-size: 1;text-label-position-tolerance: 10;text-fill: #000000;text-halo-fill: #FFFFFF;text-halo-radius: 3;text-dy: -10;text-allow-overlap: false;text-placement: point;text-placement-type: simple;[zoom <=7] {text-size:2}[zoom =7] {text-size:5}[zoom=8] {text-size:6.5}[zoom=9] {text-size:8}[zoom=10] {text-size:10}[zoom=11] {text-size:15}[zoom =10] {text-dy:-19}[zoom =11] {text-dy:-29}[zoom =12] {text-dy:-39}[zoom<=8]{text-allow-overlap: false}[zoom =6] {text-halo-radius:0.5}[zoom =7]{text-halo-radius:1}[zoom=8] {text-halo-radius:1.5}[zoom =6] {text-size:1}[zoom =6]{text-size:1.5}[zoom =5] {text-size:1}[zoom =5] {text-halo-radius:0.5}}"
 	},{
 	  sql: sqlQuery,
-	  cartocss: "#guinea_callcentredata_1_death{marker-fill-opacity: 0.9;marker-line-color: #FFF;marker-line-width: 1;marker-line-opacity: 1;marker-placement: point;marker-type: ellipse;marker-width: 28;marker-allow-overlap:true;}#guinea_callcentredata_1_death[call_type='Death'] {marker-fill: #000000;}#guinea_callcentredata_1::labels {text-name: [calls_related_to_death];text-face-name: 'DejaVu Sans Book';text-size: 10;text-label-position-tolerance: 10;text-fill: #000000;text-halo-fill: #FFFFFF;text-halo-radius: 1;text-dy: 0;text-allow-overlap: true;text-placement: interior;text-placement-type: simple;}"
+	  cartocss: "#guinea_callcentredata_1_death{marker-fill-opacity: 0.9;marker-line-color: #FFF;marker-line-width: 1;marker-line-opacity: 1;marker-placement: point;marker-type: ellipse;marker-width: 28;marker-allow-overlap:true;}#guinea_callcentredata_1_death {marker-fill: #000000;}#guinea_callcentredata_1::labels {text-name: [calls_related_to_death];text-face-name: 'DejaVu Sans Book';text-size: 10;text-label-position-tolerance: 10;text-fill: #000000;text-halo-fill: #FFFFFF;text-halo-radius: 1;text-dy: 0;text-allow-overlap: true;text-placement: interior;text-placement-type: simple;}"
     }
 	]
 	}
@@ -298,6 +298,7 @@
   			query = query.replace('Admin3','Admin2');
   			query_all = query_all.replace('Admin3','Admin2');
 	  		sublayers[0].setSQL(query);
+	  		sublayers[4].setSQL(query);
 	  		sublayers[1].setSQL(query_all);
 	  		$('.button.subprefec').removeClass('selected');
 	  		sublayers[3].hide();
@@ -308,6 +309,7 @@
   			query = query.replace('Admin2','Admin3');
   			query_all = query_all.replace('Admin2','Admin3');
 	  		sublayers[0].setSQL(query);
+	  		sublayers[4].setSQL(query);
 	  		sublayers[1].setSQL(query_all);
 	  		$('.button.prefec').removeClass('selected');
 	  		sublayers[2].hide();
