@@ -119,9 +119,9 @@
 	//var previous_signal = 'all_signal';
 	//var previous_net_type = 'all_net_type';
 	
-	var sqlQuery = "SELECT the_geom_webmercator, cartodb_id, symptoms, prefectures__admin2_ , sub_prefectures__admin3_, call_type, calls_related_to_sick, admin_category, total_count, calls_related_to_death FROM guinea_callcentredata_1 WHERE call_type = 'Sick' and admin_category = 'Admin2' ";
+	var sqlQuery = "SELECT the_geom_webmercator, cartodb_id, symptoms, prefectures , sub_prefectures , calls_related_to_sick, admin_category, total_count, calls_related_to_death FROM guinea_callcentredata_2 WHERE calls_related_to_sick != 0 and admin_category = 'Admin2' ";
 	
-		var sqlQuery_all = "SELECT the_geom_webmercator, symptoms, prefectures__admin2_ , sub_prefectures__admin3_, call_type, calls_related_to_sick, admin_category, total_count, calls_related_to_death FROM guinea_callcentredata_1 WHERE admin_category = 'Admin2'";
+		var sqlQuery_all = "SELECT cartodb_id, the_geom_webmercator, symptoms, prefectures , sub_prefectures , calls_related_to_sick, admin_category, total_count, calls_related_to_death FROM guinea_callcentredata_2 WHERE admin_category = 'Admin2'";
 	
 	var query = sqlQuery;
 	var query_all = sqlQuery_all;
@@ -185,10 +185,10 @@
 	type: 'cartodb',
 	sublayers: [{
 	  sql: sqlQuery,
-	  cartocss: "#guinea_callcentredata_1{marker-fill-opacity: 0.9;marker-line-color: #FFF;marker-line-width: 1;marker-line-opacity: 1;marker-placement: point;marker-type: ellipse;marker-width: 28;marker-allow-overlap:true;}#guinea_callcentredata_1[call_type='Sick'] {marker-fill: #229A00;}#guinea_callcentredata_1::labels {text-name: [calls_related_to_sick];text-face-name: 'DejaVu Sans Book';text-size: 10;text-label-position-tolerance: 10;text-fill: #000000;text-halo-fill: #FFFFFF;text-halo-radius: 1;text-dy: 0;text-allow-overlap: true;text-placement: interior;text-placement-type: simple;}"
+	  cartocss: "#guinea_callcentredata_1[calls_related_to_sick != 0]{marker-fill-opacity: 0.9;marker-line-color: #FFF;marker-line-width: 1;marker-line-opacity: 1;marker-placement: point;marker-type:ellipse;marker-allow-overlap:true;marker-fill:#229A00;}#guinea_callcentredata_1::labels {text-name: [calls_related_to_sick];text-face-name: 'DejaVu Sans Book';text-size: 10;text-label-position-tolerance: 10;text-fill: #000000;text-halo-fill: #FFFFFF;text-halo-radius: 1;text-dy: 0;text-allow-overlap: true;text-placement: interior;text-placement-type: simple;}#guinea_callcentredata_1[calls_related_to_sick <= 3103] {marker-width: 35.0;}#guinea_callcentredata_1[calls_related_to_sick <= 700] {marker-width: 28.3;}#guinea_callcentredata_1[calls_related_to_sick <= 100] {marker-width: 20.3;}"
     },{
 	  sql: sqlQuery_all,
-	  cartocss: "#guinea_callcentredata_1_all{marker-fill-opacity: 0.9;marker-line-color: #FFF;marker-line-width: 1;marker-line-opacity: 1;marker-placement: point;marker-type: ellipse;marker-width: 28;marker-allow-overlap:true;marker-fill:  #0F3B82;}#guinea_callcentredata_1_all::labels {text-name: [total_count];text-face-name: 'DejaVu Sans Book';text-size: 10;text-label-position-tolerance: 10;text-fill: #000000;text-halo-fill: #FFFFFF;text-halo-radius: 1;text-dy: 0;text-allow-overlap: true;text-placement: interior;text-placement-type: simple;}"
+	  cartocss: "#guinea_callcentredata_1_all{marker-fill-opacity: 0.9;marker-line-color: #FFF;marker-line-width: 1;marker-line-opacity: 1;marker-placement: point;marker-type: ellipse;marker-width: 28;marker-allow-overlap:true;marker-fill:  #0F3B82;}#guinea_callcentredata_1_all::labels {text-name: [total_count];text-face-name: 'DejaVu Sans Book';text-size: 10;text-label-position-tolerance: 10;text-fill: #000000;text-halo-fill: #FFFFFF;text-halo-radius: 1;text-dy: 0;text-allow-overlap: true;text-placement: interior;text-placement-type: simple;}#guinea_callcentredata_1_all[total_count <= 3103] {marker-width: 35.0;}#guinea_callcentredata_1_all[total_count <= 700] {marker-width: 28.3;}#guinea_callcentredata_1_all[total_count <= 100] {marker-width: 20.3;}"
         }
         ,{
 	  sql: "SELECT * FROM guinea_admin2_boundary",
@@ -198,7 +198,7 @@
 	  cartocss: "#guinea_admin3_boundary{polygon-fill: #5CA2D1;polygon-opacity: 0.1;line-color: #F11810;line-width: 2.5;line-opacity: 0.1;}#guinea_admin3_boundary::labels {text-name: [admin3_name];text-face-name: 'DejaVu Sans Book';text-size: 1;text-label-position-tolerance: 10;text-fill: #000000;text-halo-fill: #FFFFFF;text-halo-radius: 3;text-dy: -10;text-allow-overlap: false;text-placement: point;text-placement-type: simple;[zoom <=7] {text-size:2}[zoom =7] {text-size:5}[zoom=8] {text-size:6.5}[zoom=9] {text-size:8}[zoom=10] {text-size:10}[zoom=11] {text-size:15}[zoom =10] {text-dy:-19}[zoom =11] {text-dy:-29}[zoom =12] {text-dy:-39}[zoom<=8]{text-allow-overlap: false}[zoom =6] {text-halo-radius:0.5}[zoom =7]{text-halo-radius:1}[zoom=8] {text-halo-radius:1.5}[zoom =6] {text-size:1}[zoom =6]{text-size:1.5}[zoom =5] {text-size:1}[zoom =5] {text-halo-radius:0.5}}"
 	},{
 	  sql: sqlQuery,
-	  cartocss: "#guinea_callcentredata_1_death{marker-fill-opacity: 0.9;marker-line-color: #FFF;marker-line-width: 1;marker-line-opacity: 1;marker-placement: point;marker-type: ellipse;marker-width: 28;marker-allow-overlap:true;}#guinea_callcentredata_1_death {marker-fill: #000000;}#guinea_callcentredata_1::labels {text-name: [calls_related_to_death];text-face-name: 'DejaVu Sans Book';text-size: 10;text-label-position-tolerance: 10;text-fill: #000000;text-halo-fill: #FFFFFF;text-halo-radius: 1;text-dy: 0;text-allow-overlap: true;text-placement: interior;text-placement-type: simple;}"
+	  cartocss: "#guinea_callcentredata_1_death[calls_related_to_death != 0]{marker-fill-opacity: 0.9;marker-line-color: #FFF;marker-line-width: 1;marker-line-opacity: 1;marker-placement: point;marker-type: ellipse;marker-width: 28;marker-allow-overlap:true;marker-fill: #000000;}#guinea_callcentredata_1::labels {text-name: [calls_related_to_death];text-face-name: 'DejaVu Sans Book';text-size: 10;text-label-position-tolerance: 10;text-fill: #000000;text-halo-fill: #FFFFFF;text-halo-radius: 1;text-dy: 0;text-allow-overlap: true;text-placement: interior;text-placement-type: simple;}#guinea_callcentredata_1_death[calls_related_to_death <= 378] {marker-width: 35.0;}#guinea_callcentredata_1_death[calls_related_to_death <= 278] {marker-width: 28.3;}#guinea_callcentredata_1_death[calls_related_to_death <= 192] {marker-width: 20.3;}"
     }
 	]
 	}
@@ -223,18 +223,18 @@
 		sublayers[4].hide();
 	
 
-		cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(0), [ 'cartodb_id', 'admin_category',  'calls_related_to_death', 'prefectures__admin2_' , 'total_count', 'sub_prefectures__admin3_', 'calls_related_to_sick', 'symptoms', 'call_type' ])	
+		cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(0), [ 'cartodb_id', 'admin_category',  'calls_related_to_death', 'prefectures' , 'total_count', 'sub_prefectures', 'calls_related_to_sick', 'symptoms'])	
 
-		cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(1), [ 'admin_category',  'calls_related_to_death', 'prefectures__admin2_' , 'total_count', 'sub_prefectures__admin3_', 'calls_related_to_sick', 'symptoms', 'call_type' ])	
+		cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(1), [ 'cartodb_id', 'admin_category',  'calls_related_to_death', 'prefectures' , 'total_count', 'sub_prefectures', 'calls_related_to_sick', 'symptoms' ])	
 
-		cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(4), [ 'cartodb_id', 'admin_category',  'calls_related_to_death', 'prefectures__admin2_' , 'total_count', 'sub_prefectures__admin3_', 'calls_related_to_sick', 'symptoms', 'call_type' ])				
+		cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(4), [ 'cartodb_id', 'admin_category',  'calls_related_to_death', 'prefectures' , 'total_count', 'sub_prefectures', 'calls_related_to_sick', 'symptoms' ])				
 		
 		var legendCallType = new cdb.geo.ui.Legend({
            type: "custom",
            data: [
-            { name: "Death (total number of calls)", value: "#081B47" },
-            { name: "Sick (total number of calls)", value: "#229A00" },
-            { name: "All type (Number of calls)", value: "#0F3B82" }
+            { name: "Sick (number of sick calls)", value: "#229A00" },
+            { name: "Death (number of death calls)", value: "#081B47" },
+            { name: "All type (total number of calls)", value: "#0F3B82" }
            ]
 		});
 		
@@ -267,7 +267,7 @@
 	
  death: function(){
 
-  			query = query.replace('Sick','Death');
+  			query = query.replace('calls_related_to_sick !=','calls_related_to_death !=');
 	  		sublayers[4].setSQL(query);
 	  		sublayers[4].toggle();
 	  		sublayers[1].hide();
@@ -279,7 +279,7 @@
 	  },
 	  sick: function(){
 
-  			query = query.replace('Death','Sick');
+  			query = query.replace('calls_related_to_death !=','calls_related_to_sick !=');
 	  		sublayers[0].setSQL(query);
 	  		sublayers[0].toggle();
 	  		sublayers[1].hide();
@@ -369,7 +369,7 @@ $('.button').bind( "click", checkclick );
 		<a href="#sick" id="sick" class="button sick">Sick</a> 
 		<a href="#all" id="all" class="button all">All</a> 
 		
-	<a id=download href="http://ehealthafrica.cartodb.com/api/v2/sql?format=csv&q=SELECT+*+FROM+guinea_callcentredata_1" target="_blank">Download as CSV</a>
+	<a id=download href="http://ehealthafrica.cartodb.com/api/v2/sql?format=csv&q=SELECT+prefectures,sub_prefectures,date_created,symptoms,latitude,longitude,admin_category,calls_related_to_sick,calls_related_to_death,total_count,cartodb_id,created_at,updated_at+FROM+guinea_callcentredata_2" target="_blank">Download as CSV</a>
 
 	  </div>
 </td>	  
