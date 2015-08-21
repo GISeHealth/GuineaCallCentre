@@ -119,9 +119,9 @@
 	//var previous_signal = 'all_signal';
 	//var previous_net_type = 'all_net_type';
 	
-	var sqlQuery = "SELECT the_geom_webmercator, cartodb_id, symptoms, prefectures , sub_prefectures , calls_related_to_sick, admin_category, total_count, calls_related_to_death FROM guinea_callcentredata_2 WHERE calls_related_to_sick != 0 and admin_category = 'Admin2' ";
+	var sqlQuery = "SELECT the_geom_webmercator, cartodb_id, symptoms, prefectures , sub_prefectures , calls_related_to_sick, date_created, admin_category, total_count, calls_related_to_death FROM guinea_callcentredata_2 WHERE calls_related_to_sick != 0 and admin_category = 'Admin2' ";
 	
-		var sqlQuery_all = "SELECT cartodb_id, the_geom_webmercator, symptoms, prefectures , sub_prefectures , calls_related_to_sick, admin_category, total_count, calls_related_to_death FROM guinea_callcentredata_2 WHERE admin_category = 'Admin2'";
+		var sqlQuery_all = "SELECT cartodb_id, the_geom_webmercator, symptoms, prefectures , sub_prefectures , calls_related_to_sick, date_created, admin_category, total_count, calls_related_to_death FROM guinea_callcentredata_2 WHERE admin_category = 'Admin2'";
 	
 	var query = sqlQuery;
 	var query_all = sqlQuery_all;
@@ -223,11 +223,12 @@
 		sublayers[4].hide();
 	
 
-		cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(0), [ 'cartodb_id', 'admin_category',  'calls_related_to_death', 'prefectures' , 'total_count', 'sub_prefectures', 'calls_related_to_sick', 'symptoms'])	
+		cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(0), [  'date_created','admin_category', 'calls_related_to_sick', 'calls_related_to_death', 'total_count', 'sub_prefectures', 'prefectures', 'symptoms','cartodb_id'])	
 
-		cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(1), [ 'cartodb_id', 'admin_category',  'calls_related_to_death', 'prefectures' , 'total_count', 'sub_prefectures', 'calls_related_to_sick', 'symptoms' ])	
 
-		cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(4), [ 'cartodb_id', 'admin_category',  'calls_related_to_death', 'prefectures' , 'total_count', 'sub_prefectures', 'calls_related_to_sick', 'symptoms' ])				
+		cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(1), [ 'date_created','admin_category', 'calls_related_to_sick', 'calls_related_to_death', 'total_count', 'sub_prefectures', 'prefectures', 'symptoms','cartodb_id'])	
+
+		cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(4), [ 'date_created','admin_category', 'calls_related_to_sick', 'calls_related_to_death', 'total_count', 'sub_prefectures', 'prefectures', 'symptoms','cartodb_id' ])				
 		
 		var legendCallType = new cdb.geo.ui.Legend({
            type: "custom",
